@@ -14,7 +14,7 @@ headers = {
 
 def discover():
     print("Discovering active wallets...")
-    url = f"{TRONSCAN_API}/api/token_trc20/transfers?limit=50&start=0&contract_address={USDT_CONTRACT}"
+    url = f"{TRONSCAN_API}/api/token_trc20/transfers?limit=300&start=0&contract_address={USDT_CONTRACT}"
     try:
         res = requests.get(url, headers=headers, timeout=15)
         transfers = res.json().get("token_transfers", [])
