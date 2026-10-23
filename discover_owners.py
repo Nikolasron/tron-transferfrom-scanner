@@ -4,17 +4,17 @@ import os
 TRONSCAN_API = "https://apilist.tronscanapi.com"
 USDT_CONTRACT = "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t"
 
-# Read TronScan key securely from GitHub Secrets
-TRONSCAN_API_KEY = os.environ.get("TRONSCAN_API_KEY", "")
+# --- CONFIGURATION ---
+LIMIT = 200 # Set this to 200 to scan more wallets
 
-headers = {
-    "TRON-PRO-API-KEY": TRONSCAN_API_KEY,
-    "Accept": "application/json"
-}
+TRONSCAN_API_KEY = os.environ.get("TRONSCAN_API_KEY", "")
+headers = {"TRON-PRO-API-KEY": TRONSCAN_API_KEY}
 
 def discover():
-    print("Discovering active wallets...")
-    url = f"{TRONSCAN_API}/api/token_trc20/transfers?limit=300&start=0&contract_address={USDT_CONTRACT}"
+    print(f"Discovering {LIMIT} active wallets...")
+    # Notice how we put {LIMIT} inside the URL string below:
+    url = f"{TRONSCAN_API}/api/token_trc20/transfers?limit={LIMIT}&start=0&contract_address={USDT_CONTRACT}"
+    
     try:
         res = requests.get(url, headers=headers, timeout=15)
         transfers = res.json().get("token_transfers", [])
