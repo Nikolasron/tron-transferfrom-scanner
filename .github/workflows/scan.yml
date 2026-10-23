@@ -2,7 +2,7 @@ name: TRON Auto Scanner
 
 on:
   schedule:
-    - cron: '0 */4 * * *' # Every 4 hours
+    - cron: '0 */15* * *' # Every 15 minutes 
   workflow_dispatch: 
 
 jobs:
