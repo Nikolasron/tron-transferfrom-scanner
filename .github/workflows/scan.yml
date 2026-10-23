@@ -40,3 +40,4 @@ jobs:
           git add active_approvals.json active_approvals.csv discovered_addresses.txt
           git commit -m "Update scan results [Skip CI]" || exit 0
           git push
+          
