@@ -23,9 +23,14 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Discover Active Owners
+        env:
+          TRONSCAN_API_KEY: ${{ secrets.TRONSCAN_API_KEY }}
         run: python discover_owners.py
 
       - name: Scan Approvals & ABIs (transferFrom only)
+        env:
+          TRONGRID_API_KEY: ${{ secrets.TRONGRID_API_KEY }}
+          TRONSCAN_API_KEY: ${{ secrets.TRONSCAN_API_KEY }}
         run: python tron_scanner.py
 
       - name: Commit updated results
