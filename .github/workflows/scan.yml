@@ -1,0 +1,37 @@
+name: TRON Auto Scanner
+
+on:
+  schedule:
+    - cron: '0 */4 * * *' # Every 4 hours
+  workflow_dispatch: 
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Discover Active Owners
+        run: python discover_owners.py
+
+      - name: Scan Approvals & ABIs (transferFrom only)
+        run: python tron_scanner.py
+
+      - name: Commit updated results
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add active_approvals.json active_approvals.csv discovered_addresses.txt
+          git commit -m "Update scan results [Skip CI]" || exit 0
+          git push
