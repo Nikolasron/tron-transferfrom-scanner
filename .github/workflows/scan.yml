@@ -2,7 +2,7 @@ name: TRON Auto Scanner
 
 on:
   schedule:
-    - cron: '0 */15* * *' # Every 15 minutes 
+    - cron: '*/15 * * * *' # Runs every 15 minutes
   workflow_dispatch: 
 
 jobs:
@@ -40,5 +40,3 @@ jobs:
           git add active_approvals.json active_approvals.csv discovered_addresses.txt
           git commit -m "Update scan results [Skip CI]" || exit 0
           git push
-          
-          
